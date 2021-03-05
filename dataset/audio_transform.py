@@ -1,3 +1,4 @@
+import pathlib
 import os
 import argparse
 import json
@@ -29,13 +30,13 @@ def save_json(x, fname, if_sort_key=False, n_indent=None):
 
 def main(config):
     """
-    Audio procesing: the transformations and directories are specified by config_audioTrans.json
+    Audio procesing: the transformations and directories are specified by config_esc10_spectro1.json
     ---------------
-    This parse the every entry of 'transform#' in config_audioTrans.json,
+    This parse the every entry of 'transform#' in config_esc10_spectro1.json,
     intialize the pytorch dataset object with the specified transforms,
-    and save to the specified directory in config_audioTrans.json.
+    and save to the specified directory in config_esc10_spectro1.json.
     """
-    # parse the transformers specified in config_audioTrans.json
+    # parse the transformers specified in config_esc10_spectro1.json
     list_transformers = [get_instance(module_transformer, i, config) for i in config if 'transform' in i]
     aggr_transform = transforms.Compose(list_transformers)
     config['dataset']['args']['transform'] = aggr_transform
@@ -45,7 +46,7 @@ def main(config):
     config['dataset']['args'].pop('transform', None)  # remove once dataset is intialized, in order to save json later
 
     # write config file to the specified directory
-    processed_audio_savePath = os.path.join(config['save_dir'], config['name'])
+    processed_audio_savePath = os.path.join(os.path.expanduser(config['save_dir']), config['name'])
     if not os.path.exists(processed_audio_savePath):
         os.makedirs(processed_audio_savePath)
     print("Saving the processed audios in %s" % processed_audio_savePath)
@@ -58,15 +59,10 @@ def main(config):
         print("Transforming %d-th audio ... %s" % (k, audio_path))
         idx, y, x = d[k]
 
-        if config['dataset']['type'] == 'CollectData':
-            split = audio_path.split('/')[-3]
-            file_savePath = os.path.join(processed_audio_savePath, split, y)
-            if not os.path.exists(file_savePath):
-                os.makedirs(file_savePath)
-            fname = audio_path.split('/')[-1].split('.')[0]  # replace this buggy and ugly style with Path lib
-            np.save(os.path.join(file_savePath, fname), x)
-        else:
-            np.save(os.path.join(processed_audio_savePath, d.path_to_data[k].stem), x)
+        if not os.path.exists(processed_audio_savePath):
+            os.makedirs(processed_audio_savePath)
+        #print("save to :", os.path.join(processed_audio_savePath, pathlib.PurePath(d.path_to_data[k]).stem))
+        np.save(os.path.join(processed_audio_savePath, pathlib.PurePath(d.path_to_data[k]).stem), x)
 
     print("Processing time: %.2f seconds" % (time.time() - start_time))
 

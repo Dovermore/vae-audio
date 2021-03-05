@@ -1,11 +1,11 @@
 {   
-    "name": "m64-5s",
-    "save_dir": "dataset/myAudioDataset/",
+    "name": "esc50-spectro1",
+    "save_dir": "~/data/esc",
     "dataset": {
-        "type": "CollectData",
+        "type": "EscData",
         "args": {
-            "path_to_dataset": ["dataset/myAudioDataset/audio"],
-            "extension": ["wav", "npy"]
+            "path_to_dataset": "~/data/esc/audio50",
+            "path_to_meta": "~/data/esc/meta/esc50.csv"
         }
     },
     "transform1": {
