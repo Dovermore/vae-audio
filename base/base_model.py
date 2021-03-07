@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import numpy as np
 from abc import abstractmethod
 
@@ -130,7 +131,7 @@ class BaseGMVAE(BaseModel):
 
 
 def sampling_gaussian(mu, logvar):
-    sigma = torch.sqrt(torch.exp(logvar))
+    sigma = F.softplus(logvar)
     eps = torch.distributions.normal.Normal(0, 1).sample(sample_shape=sigma.size())
     z = mu + sigma * eps  # reparameterization trick
     return mu, logvar, z

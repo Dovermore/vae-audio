@@ -31,7 +31,6 @@ def mse_loss(output, target, avg_batch=True):
     output = torch.sum(output)  # sum over all TF units
     if avg_batch:
         output = torch.mean(output, dim=0)
-    # return F.mse_loss(output, target, reduction=reduce)  # careful about the scaling
     return output
 
 
