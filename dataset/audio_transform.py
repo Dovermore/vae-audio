@@ -30,13 +30,13 @@ def save_json(x, fname, if_sort_key=False, n_indent=None):
 
 def main(config):
     """
-    Audio procesing: the transformations and directories are specified by config_esc10_spectro1.json
+    Audio procesing: the transformations and directories are specified by esc10_spectro1_config.json
     ---------------
-    This parse the every entry of 'transform#' in config_esc10_spectro1.json,
+    This parse the every entry of 'transform#' in esc10_spectro1_config.json,
     intialize the pytorch dataset object with the specified transforms,
-    and save to the specified directory in config_esc10_spectro1.json.
+    and save to the specified directory in esc10_spectro1_config.json.
     """
-    # parse the transformers specified in config_esc10_spectro1.json
+    # parse the transformers specified in esc10_spectro1_config.json
     list_transformers = [get_instance(module_transformer, i, config) for i in config if 'transform' in i]
     aggr_transform = transforms.Compose(list_transformers)
     config['dataset']['args']['transform'] = aggr_transform

@@ -108,7 +108,7 @@ class SpecVAE(BaseVAE):
                  n_fcLayer=1, n_fcChannel=[256]):
         """
         Construction of VAE
-        :param input_size: (n_channel, n_freqBand, n_contextWin);
+        :param input_size: (n_freqBand, n_contextWin);
                            assume a spectrogram input of size (n_freqBand, n_contextWin)
         :param latent_dim: the dimension of the latent vector
         :param is_featExtract: if True, output z as mu; otherwise, output z derived from reparameterization trick

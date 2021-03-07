@@ -30,7 +30,7 @@ class SpecVaeTrainer(BaseTrainer):
 
     def _reshape(self, x):
         n_freqBand, n_contextWin = x.size(2), x.size(3)
-        return x.view(-1, 1, n_freqBand, n_contextWin)
+        return x.view(-1, n_freqBand, n_contextWin)
 
     def _forward_and_computeLoss(self, x, target):
         x_recon, mu, logvar, z = self.model(x)
