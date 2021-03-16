@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from base import BaseModel, BaseVAE, BaseGMVAE
+from torch.distributions import Normal
 
 
 def get_activation_module(activation):
@@ -167,6 +168,11 @@ class SpecVAE(BaseVAE):
         # print(x_recon.size(), mu.size(), var.size(), z.size())
         return x_recon, mu, logvar, z
 
+    def generate(self, z=None):
+        if z is None:
+            z = self._infer_latent(0, 0)
+        x_gen = self.decode(z)
+        return x_gen
 
 class Conv1dGMVAE(BaseGMVAE):
     def __init__(self, input_size=(128, 20), latent_dim=16, n_component=12,

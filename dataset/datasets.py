@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 
 
 class EscData(Dataset):
-    def __init__(self, path_to_dataset, path_to_meta, folds=[1,2,3,4,5], transform=None):
+    def __init__(self, path_to_dataset, path_to_meta, folds=[1,2,3,4,5], transform=None, samples=None):
         path_to_dataset = os.path.expanduser(path_to_dataset)
         path_to_meta = os.path.expanduser(path_to_meta)
         self.path_to_dataset = path_to_dataset
@@ -20,6 +20,9 @@ class EscData(Dataset):
             labels.append(int(os.path.splitext(filename)[0].split('-')[-1]))
         self.path_to_data = path_to_data
         self.labels = labels
+        if samples is not None:
+            self.path_to_data = self.path_to_data[:samples]
+            self.labels = self.labels[:samples]
 
     def __len__(self):
         return len(self.path_to_data)

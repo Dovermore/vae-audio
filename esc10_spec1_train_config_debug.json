@@ -22,22 +22,23 @@
         "args":{
             "data_dir": "~/data/esc/esc10-spectro1/data",
             "path_to_meta": "~/data/esc/meta/esc10.csv",
-            "batch_size": 32,
+            "batch_size": 1,
             "shuffle": true,
-            "validation_split": 0.1,
+            "validation_split": 0,
             "num_workers": 0,
-            "folds":[1,2,3,4]
+            "folds":[1,2,3,4],
+            "samples": 1
         }
     },
     "optimizer": {
         "type": "Adam",
         "args":{
-            "lr": 0.1,
+            "lr": 1,
             "weight_decay": 0,
             "amsgrad": true
         }
     },
-    "loss": "vae_loss",
+    "loss": "mse_loss",
     "metrics": [
         "my_metric", "my_metric2"
     ],
@@ -50,10 +51,10 @@
     },
     "trainer": {
         "type": "SpecVaeTrainer",
-        "epochs": 1000,
+        "epochs": 500,
 
         "save_dir": "saved/",
-        "save_period": 10,
+        "save_period": 999999999,
         "verbosity": 2,
 
         "monitor": "min val_loss",

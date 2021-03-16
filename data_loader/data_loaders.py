@@ -21,7 +21,6 @@ class EscDataLoader(BaseDataLoader):
         ])
 
         self.data_dir = data_dir
-        # TODO: fix problem here
         self.dataset = EscData(self.data_dir, transform=self.transform, **kwargs)
         super().__init__(self.dataset, batch_size, shuffle, validation_split, num_workers)
 
