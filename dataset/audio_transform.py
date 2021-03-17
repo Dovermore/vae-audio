@@ -42,7 +42,7 @@ def main(config):
     config['dataset']['args']['transform'] = aggr_transform
 
     # get dataset and intialize with the parsed transformers
-    d = get_instance(module_dataset, 'dataset', config)
+    dataset = get_instance(module_dataset, 'dataset', config)
     config['dataset']['args'].pop('transform', None)  # remove once dataset is intialized, in order to save json later
 
     # write config file to the specified directory
@@ -54,15 +54,14 @@ def main(config):
 
     # read, process (by transform functions in object dataset), and save
     start_time = time.time()
-    for k in range(len(d)):
-        audio_path = str(d.path_to_data[k])
+    for k in range(len(dataset)):
+        audio_path = str(dataset.path_to_data[k])
         print("Transforming %d-th audio ... %s" % (k, audio_path))
-        idx, y, x = d[k]
+        idx, y, x = dataset[k]
 
         if not os.path.exists(processed_audio_savePath):
             os.makedirs(processed_audio_savePath)
-        #print("save to :", os.path.join(processed_audio_savePath, pathlib.PurePath(d.path_to_data[k]).stem))
-        np.save(os.path.join(processed_audio_savePath, pathlib.PurePath(d.path_to_data[k]).stem), x)
+        np.save(os.path.join(processed_audio_savePath, pathlib.PurePath(dataset.path_to_data[k]).stem), x)
 
     print("Processing time: %.2f seconds" % (time.time() - start_time))
 

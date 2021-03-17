@@ -36,9 +36,9 @@ def get_mse_loss(output, target, avg_batch=True):
         [] Find a good normalization scheme w.r.t frequency and time axis
     """
     output = F.mse_loss(output, target, reduction='none')
-    dim_to_sum = list(range(1, len(output.size())))
-    output = torch.sum(output, dim=dim_to_sum)  # sum over all TF units
     if avg_batch:
+        dim_to_sum = list(range(1, len(output.size())))
+        output = torch.sum(output, dim=dim_to_sum)
         output = torch.mean(output)
     else:
         output = torch.sum(output)
@@ -68,12 +68,14 @@ class KldGauss(Loss):
             mu = torch.zeros_like(q_mu)
         if logvar is None:
             logvar = torch.zeros_like(q_logvar)
-
-        output = torch.sum(1 + q_logvar - logvar - (torch.pow(q_mu - mu, 2) + torch.exp(q_logvar)) / torch.exp(logvar),
-                           dim=1)
+        output = 1 + q_logvar - logvar - (torch.pow(q_mu - mu, 2) + torch.exp(q_logvar)) / torch.exp(logvar)
         output *= -0.5
         if avg_batch:
-            output = torch.mean(output, dim=0)
+            dim_to_sum = list(range(1, len(output.size())))
+            output = torch.sum(output, dim=dim_to_sum)
+            output = torch.mean(output)
+        else:
+            output = torch.sum(output)
         return output
 
 

@@ -5,7 +5,7 @@
     "arch": {
         "type": "SpecVAE",
         "args": {
-            "input_size": [64, 15],
+            "input_size": [64, 30],
             "latent_dim": 32,
             "is_featExtract": false,
             "n_convLayer": 3,
@@ -57,7 +57,7 @@
         "verbosity": 2,
 
         "monitor": "min val_loss",
-        "early_stop": 20,
+        "early_stop": 100,
         
         "tensorboardX": true
     }

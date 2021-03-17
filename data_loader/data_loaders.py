@@ -17,7 +17,7 @@ class EscDataLoader(BaseDataLoader):
     def __init__(self, data_dir, batch_size, shuffle=True, validation_split=0.1, num_workers=1, **kwargs):
         self.transform = transforms.Compose([
             transformers.LoadNumpyAry(),
-            transformers.SpecChunking(duration=0.5, sr=22050, hop_size=735, reverse=False)
+            transformers.SpecChunking(duration=1, sr=22050, hop_size=735, reverse=False)
         ])
 
         self.data_dir = data_dir

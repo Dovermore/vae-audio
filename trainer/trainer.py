@@ -3,7 +3,8 @@ import torch
 from torchvision.utils import make_grid
 from base import BaseTrainer
 from os import path
-from librosa.feature.inverse import mel_to_audio
+from librosa.feature import inverse
+from librosa import core
 from scipy.io import wavfile
 
 
@@ -164,8 +165,8 @@ class SpecVaeTrainer(BaseTrainer):
 
             try:
                 # save waveform
-                au = mel_to_audio(x[i], sr=22050, n_fft=2048, hop_length=735)
-                recon_au = mel_to_audio(x_recon[i], sr=22050, n_fft=2048, hop_length=735)
+                au = inverse.mel_to_audio(core.db_to_power(x[i]), sr=22050, n_fft=2048, hop_length=735)
+                recon_au = inverse.mel_to_audio(core.db_to_power(x_recon[i]), sr=22050, n_fft=2048, hop_length=735)
                 rate = len(au) // 5
                 wavfile.write(path.join(self.config.sample_dir, fname + ".wav"), rate, au)
                 wavfile.write(path.join(self.config.sample_dir, fname + "_recon.wav"), rate, recon_au)
