@@ -144,3 +144,12 @@ class SpecChunking:
 class LoadNumpyAry:
     def __call__(self, x):
         return np.load(x)
+
+
+class Quantization:
+    def __init__(self, min, max):
+        self.min = min
+        self.max = max
+
+    def __call__(self, x):
+        return

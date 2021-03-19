@@ -32,10 +32,10 @@ def main(config):
     lr_scheduler = config.initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
 
     trainer = getattr(module_trainer, config['trainer']['type'])(model, loss, metrics, optimizer,
-                                                                    config=config,
-                                                                    data_loader=data_loader,
-                                                                    valid_data_loader=valid_data_loader,
-                                                                    lr_scheduler=lr_scheduler)
+                                                                config=config,
+                                                                data_loader=data_loader,
+                                                                valid_data_loader=valid_data_loader,
+                                                                lr_scheduler=lr_scheduler)
     trainer.train()
 
 
