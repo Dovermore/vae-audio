@@ -1,0 +1,33 @@
+{   
+    "name": "esc10-raw1",
+    "save_dir": "~/data/esc",
+    "dataset": {
+        "type": "EscData",
+        "args": {
+            "path_to_dataset": "~/data/esc/audio10",
+            "path_to_meta": "~/data/esc/meta/esc10.csv"
+        }
+    },
+    "transform1": {
+        "type": "AudioRead",
+        "args": {
+            "sr": 22050,
+            "duration": 5
+        }
+    },
+    "transform2": {
+        "type": "PadAudio",
+        "args": {
+            "sr": 22050,
+            "pad_to": 5
+        }
+    },
+    "transform4": {
+        "type": "Discretization",
+        "args": {
+            "min": 0,
+            "max": 100,
+            "nbins": 128
+        }
+    }
+}

@@ -30,8 +30,9 @@ class EscData(Dataset):
     def __getitem__(self, idx):
         if self.transform:
             return idx, self.labels[idx], self.transform(self.path_to_data[idx])
-
         return idx, self.labels[idx], self.path_to_data[idx]
+
+
 
 
 if __name__ == '__main__':

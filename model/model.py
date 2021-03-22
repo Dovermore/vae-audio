@@ -1,9 +1,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from base import BaseModel, BaseVAE
-from torch.distributions import Normal
+from base import BaseVAE
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
